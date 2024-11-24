@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-container
+    ports:
+      - "27018:27017"  # Host:Container port mapping for MongoDB
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  redis:
+    image: redis
+    container_name: redis-container
+    ports:
+      - "6379:6379"  # Redis default port
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"  # Zookeeper port
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka-container
+    ports:
+      - "9092:9092"  # Kafka broker port
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
