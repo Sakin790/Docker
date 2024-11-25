@@ -1,0 +1,47 @@
+# Zookeeper
+```
+docker run -d --name zookeeper -p 2181:2181 -e ZOOKEEPER_SERVER_ID=1 -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=2000 -e ZOOKEEPER_INIT_LIMIT=5 -e ZOOKEEPER_SYNC_LIMIT=2 -e ZOOKEEPER_DATA_DIR=/var/lib/zookeeper zookeeper:3.8.1
+```
+# Kafka
+```
+docker run -d --name kafka -p 9092:9092 --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 --env KAFKA_BROKER_ID=1 --env KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://172.24.160.1:9092 --env KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT --env KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT --env KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 --env KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1 --env KAFKA_LOG_FLUSH_INTERVAL_MS=1000 --env KAFKA_LOG_FLUSH_SCHEDULE_INTERVAL_MS=1000 --env KAFKA_DELETE_TOPIC_ENABLE=true --link zookeeper:zookeeper bitnami/kafka
+```
+
+# Docker Compose.yml
+
+```
+version: '3.8'
+
+services:
+  zookeeper:
+    image: zookeeper:3.8.1
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_DATA_DIR: /var/lib/zookeeper
+
+  kafka:
+    image: bitnami/kafka
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.24.160.1:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_LOG_FLUSH_INTERVAL_MS: 1000
+      KAFKA_LOG_FLUSH_SCHEDULE_INTERVAL_MS: 1000
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+```
