@@ -1,0 +1,4 @@
+docker pull mysql:latest
+docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:latest
+docker exec -it my-mysql bash
+mysql -u root -p 
