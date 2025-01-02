@@ -2,3 +2,36 @@ docker pull mysql:latest
 docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:latest
 docker exec -it my-mysql bash
 mysql -u root -p 
+
+$ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=secret -p 3307:3306 mysql
+
+
+CREATE TABLE your_table_name (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    createdAt DATETIME NOT NULL
+);
+
+
+INSERT INTO your_table_name (id, title, content, createdAt) VALUES
+(1, 'Title 1', 'This is the content for Title 1', '2024-12-01 10:00:00'),
+(2, 'Title 2', 'This is the content for Title 2', '2024-12-01 11:00:00'),
+(3, 'Title 3', 'This is the content for Title 3', '2024-12-01 12:00:00'),
+(4, 'Title 4', 'This is the content for Title 4', '2024-12-01 13:00:00'),
+(5, 'Title 5', 'This is the content for Title 5', '2024-12-01 14:00:00'),
+(6, 'Title 6', 'This is the content for Title 6', '2024-12-02 10:00:00'),
+(7, 'Title 7', 'This is the content for Title 7', '2024-12-02 11:00:00'),
+(8, 'Title 8', 'This is the content for Title 8', '2024-12-02 12:00:00'),
+(9, 'Title 9', 'This is the content for Title 9', '2024-12-02 13:00:00'),
+(10, 'Title 10', 'This is the content for Title 10', '2024-12-02 14:00:00'),
+(11, 'Title 11', 'This is the content for Title 11', '2024-12-03 10:00:00'),
+(12, 'Title 12', 'This is the content for Title 12', '2024-12-03 11:00:00'),
+(13, 'Title 13', 'This is the content for Title 13', '2024-12-03 12:00:00'),
+(14, 'Title 14', 'This is the content for Title 14', '2024-12-03 13:00:00'),
+(15, 'Title 15', 'This is the content for Title 15', '2024-12-03 14:00:00'),
+(16, 'Title 16', 'This is the content for Title 16', '2024-12-04 10:00:00'),
+(17, 'Title 17', 'This is the content for Title 17', '2024-12-04 11:00:00'),
+(18, 'Title 18', 'This is the content for Title 18', '2024-12-04 12:00:00'),
+(19, 'Title 19', 'This is the content for Title 19', '2024-12-04 13:00:00'),
+(20, 'Title 20', 'This is the content for Title 20', '2024-12-04 14:00:00');
